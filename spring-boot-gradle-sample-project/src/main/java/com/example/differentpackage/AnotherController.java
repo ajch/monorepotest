@@ -15,5 +15,4 @@ public class AnotherController {
     public String anotherApi() {
         return "Greetings from Spring Boot!";
     }
-
 }
