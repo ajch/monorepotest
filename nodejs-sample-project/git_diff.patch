@@ -1,0 +1,157 @@
+diff --git a/Users/manya/Documents/bito/test-agent/nodejs-sample-project/package.json b/Users/manya/Documents/bito/test-agent/output/package.json
+index 52da535..09d8f25 100644
+--- a/Users/manya/Documents/bito/test-agent/nodejs-sample-project/package.json
++++ b/Users/manya/Documents/bito/test-agent/output/package.json
+@@ -4,10 +4,12 @@
+   "description": "",
+   "main": "index.js",
+   "scripts": {
++    "test": "jest --coverage --collectCoverageFrom=src/**/*.{js,jsx}"
+   },
+   "author": "",
+   "license": "ISC",
+   "devDependencies": {
++    "jest": "^27.5.1"
+   },
+   "dependencies": {}
+ }
+diff --git a/Users/manya/Documents/bito/test-agent/nodejs-sample-project/src/index.spec.js b/Users/manya/Documents/bito/test-agent/output/src/index.spec.js
+index a1ee5f4..00c6f0c 100644
+--- a/Users/manya/Documents/bito/test-agent/nodejs-sample-project/src/index.spec.js
++++ b/Users/manya/Documents/bito/test-agent/output/src/index.spec.js
+@@ -1,14 +1,62 @@
+-'use strict';
++const { joinStrings } = require('./index');
+ 
++describe('joinStrings function', () => {
++  // Test for line 14: joinStrings should return a string
++  test('should return a string', () => {
++    const result = joinStrings(['hello', 'world']);
++    expect(typeof result).toBe('string');
++  });
+ 
+-var example = require('./index.js');
++  // Test for line 15: joinStrings should correctly join an array of strings with spaces
++  test('should correctly join strings with spaces', () => {
++    const result = joinStrings(['hello', 'world']);
++    expect(result).toBe('hello world');
++  });
+ 
+-test('testGetSupportedLanguages', () => {
+-  expect(example.getSupportedLanguages()).toHaveLength(2)
+-});
++  // Test for line 17: joinStrings should handle an empty array
++  test('should return an empty string for an empty array', () => {
++    const result = joinStrings([]);
++    expect(result).toBe('');
++  });
+ 
+-test('testGetLanguage', () => {
+-  expect(example.getLanguage("nodejs")).toBe('Node')
+-});
++  // Test for line 22: joinStrings should handle single-element arrays
++  test('should handle single-element arrays', () => {
++    const result = joinStrings(['hello']);
++    expect(result).toBe('hello');
++  });
++
++  // Test for invalid input: joinStrings should throw an error for non-array inputs
++  test('should throw an error for non-array inputs', () => {
++    expect(() => {
++      joinStrings(null);
++    }).toThrow();
++
++    expect(() => {
++      joinStrings(undefined);
++    }).toThrow();
+ 
++    expect(() => {
++      joinStrings('hello world');
++    }).toThrow();
+ 
++    expect(() => {
++      joinStrings(123);
++    }).toThrow();
++
++    expect(() => {
++      joinStrings({});
++    }).toThrow();
++  });
++
++  // Test for arrays containing non-string elements
++  test('should correctly join arrays with non-string elements', () => {
++    const result = joinStrings(['hello', 123, true, null]);
++    expect(result).toBe('hello 123 true ');
++  });
++
++  // Test for arrays with nested arrays
++  test('should not automatically flatten nested arrays', () => {
++    const result = joinStrings(['hello', ['world', 'universe']]);
++    expect(result).toBe('hello world,universe');
++  });
++});
+diff --git a/Users/manya/Documents/bito/test-agent/output/src/other.spec.js b/Users/manya/Documents/bito/test-agent/output/src/other.spec.js
+new file mode 100644
+index 0000000..1999225
+--- /dev/null
++++ b/Users/manya/Documents/bito/test-agent/output/src/other.spec.js
+@@ -0,0 +1,59 @@
++const { getOtherUsers, joinOtherStrings } = require('./other');
++
++describe('other.js functions', () => {
++  describe('getOtherUsers function', () => {
++    test('should return an array of user objects', () => {
++      const users = getOtherUsers();
++      expect(Array.isArray(users)).toBe(true);
++      expect(users).toEqual(expect.arrayContaining([{ name: expect.any(String) }]));
++    });
++
++    test('should return correct user names', () => {
++      const users = getOtherUsers();
++      expect(users).toEqual([
++        { name: 'Node' },
++        { name: 'JavaScript' }
++      ]);
++    });
++  });
++
++  describe('joinOtherStrings function', () => {
++    test('should return a string', () => {
++      const result = joinOtherStrings(['hello', 'world']);
++      expect(typeof result).toBe('string');
++    });
++
++    test('should correctly join an array of strings with spaces', () => {
++      const result = joinOtherStrings(['hello', 'world']);
++      expect(result).toBe('hello world');
++    });
++
++    test('should return an empty string for an empty array', () => {
++      const result = joinOtherStrings([]);
++      expect(result).toBe('');
++    });
++
++    test('should handle single-element arrays', () => {
++      const result = joinOtherStrings(['hello']);
++      expect(result).toBe('hello');
++    });
++
++    test('should throw an error for non-array inputs', () => {
++      expect(() => joinOtherStrings(null)).toThrow();
++      expect(() => joinOtherStrings(undefined)).toThrow();
++      expect(() => joinOtherStrings(123)).toThrow();
++      expect(() => joinOtherStrings('hello')).toThrow();
++      expect(() => joinOtherStrings({})).toThrow();
++    });
++
++    test('should correctly join arrays with non-string elements', () => {
++      const result = joinOtherStrings(['hello', 123, true, null]);
++      expect(result).toBe('hello 123 true ');
++    });
++
++    test('should not automatically flatten nested arrays', () => {
++      const result = joinOtherStrings(['hello', ['world', 'universe']]);
++      expect(result).toBe('hello world,universe');
++    });
++  });
++});

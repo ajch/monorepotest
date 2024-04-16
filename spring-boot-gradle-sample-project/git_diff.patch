@@ -1,0 +1,169 @@
+diff --git a/Users/manya/Documents/bito/test-agent/output/src/test/java/com/example/differentpackage/AnotherControllerTest.java b/Users/manya/Documents/bito/test-agent/output/src/test/java/com/example/differentpackage/AnotherControllerTest.java
+new file mode 100644
+index 0000000..c0fe871
+--- /dev/null
++++ b/Users/manya/Documents/bito/test-agent/output/src/test/java/com/example/differentpackage/AnotherControllerTest.java
+@@ -0,0 +1,39 @@
++package com.example.differentpackage;
++
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++import org.mockito.Mock;
++import org.mockito.MockitoAnnotations;
++import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
++import org.springframework.test.web.servlet.MockMvc;
++import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
++import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
++
++@WebMvcTest(AnotherController.class)
++public class AnotherControllerTest {
++
++    @Mock
++    private AnotherController anotherController;
++
++    private MockMvc mockMvc;
++
++    @BeforeEach
++    public void setup() {
++        MockitoAnnotations.openMocks(this);
++        this.mockMvc = MockMvcBuilders.standaloneSetup(anotherController).build();
++    }
++
++    @Test
++    public void testIndex() throws Exception {
++        mockMvc.perform(MockMvcRequestBuilders.get("/another"))
++                .andExpect(MockMvcResultMatchers.status().isOk())
++                .andExpect(MockMvcResultMatchers.content().string("Greetings from Spring Boot!"));
++    }
++
++    @Test
++    public void testAnotherApi() throws Exception {
++        mockMvc.perform(MockMvcRequestBuilders.get("/anotherApi"))
++                .andExpect(MockMvcResultMatchers.status().isOk())
++                .andExpect(MockMvcResultMatchers.content().string("Greetings from Spring Boot!"));
++    }
++}
+diff --git a/Users/manya/Documents/bito/test-agent/output/src/test/java/com/example/springboot/AnotherControllerTest.java b/Users/manya/Documents/bito/test-agent/output/src/test/java/com/example/springboot/AnotherControllerTest.java
+new file mode 100644
+index 0000000..bbcd7a8
+--- /dev/null
++++ b/Users/manya/Documents/bito/test-agent/output/src/test/java/com/example/springboot/AnotherControllerTest.java
+@@ -0,0 +1,39 @@
++package com.example.springboot;
++
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++import org.mockito.Mock;
++import org.mockito.MockitoAnnotations;
++import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
++import org.springframework.test.web.servlet.MockMvc;
++import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
++import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
++
++@WebMvcTest(AnotherController.class)
++public class AnotherControllerTest {
++
++    @Mock
++    private AnotherController anotherController;
++
++    private MockMvc mockMvc;
++
++    @BeforeEach
++    public void setup() {
++        MockitoAnnotations.openMocks(this);
++        this.mockMvc = MockMvcBuilders.standaloneSetup(anotherController).build();
++    }
++
++    @Test
++    public void testIndex() throws Exception {
++        mockMvc.perform(MockMvcRequestBuilders.get("/another"))
++                .andExpect(MockMvcResultMatchers.status().isOk())
++                .andExpect(MockMvcResultMatchers.content().string("Greetings from Spring Boot!"));
++    }
++
++    @Test
++    public void testAnotherApi() throws Exception {
++        mockMvc.perform(MockMvcRequestBuilders.get("/anotherApi"))
++                .andExpect(MockMvcResultMatchers.status().isOk())
++                .andExpect(MockMvcResultMatchers.content().string("Greetings from Spring Boot!"));
++    }
++}
+diff --git a/Users/manya/Documents/bito/test-agent/output/src/test/java/com/example/springboot/ApplicationTest.java b/Users/manya/Documents/bito/test-agent/output/src/test/java/com/example/springboot/ApplicationTest.java
+new file mode 100644
+index 0000000..6a3c9bd
+--- /dev/null
++++ b/Users/manya/Documents/bito/test-agent/output/src/test/java/com/example/springboot/ApplicationTest.java
+@@ -0,0 +1,35 @@
++package com.example.springboot;
++
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++import org.mockito.Mock;
++import org.mockito.MockitoAnnotations;
++import org.springframework.boot.test.context.SpringBootTest;
++import org.springframework.context.ApplicationContext;
++
++import static org.mockito.Mockito.*;
++
++@SpringBootTest
++public class ApplicationTest {
++
++    @Mock
++    private ApplicationContext applicationContext;
++
++    private Application application;
++
++    @BeforeEach
++    public void setup() {
++        MockitoAnnotations.openMocks(this);
++        application = new Application();
++    }
++
++    @Test
++    public void testMain() {
++        String[] args = new String[0];
++        when(applicationContext.getBeanDefinitionNames()).thenReturn(new String[]{"bean1", "bean2"});
++
++        Application.main(args);
++
++        verify(applicationContext, times(1)).getBeanDefinitionNames();
++    }
++}
+diff --git a/Users/manya/Documents/bito/test-agent/output/src/test/java/com/example/springboot/HelloControllerTest.java b/Users/manya/Documents/bito/test-agent/output/src/test/java/com/example/springboot/HelloControllerTest.java
+new file mode 100644
+index 0000000..7eedc91
+--- /dev/null
++++ b/Users/manya/Documents/bito/test-agent/output/src/test/java/com/example/springboot/HelloControllerTest.java
+@@ -0,0 +1,32 @@
++package com.example.springboot;
++
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++import org.mockito.Mock;
++import org.mockito.MockitoAnnotations;
++import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
++import org.springframework.test.web.servlet.MockMvc;
++import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
++import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
++
++@WebMvcTest(HelloController.class)
++public class HelloControllerTest {
++
++    @Mock
++    private HelloController helloController;
++
++    private MockMvc mockMvc;
++
++    @BeforeEach
++    public void setup() {
++        MockitoAnnotations.openMocks(this);
++        this.mockMvc = MockMvcBuilders.standaloneSetup(helloController).build();
++    }
++
++    @Test
++    public void testIndex() throws Exception {
++        mockMvc.perform(MockMvcRequestBuilders.get("/"))
++                .andExpect(MockMvcResultMatchers.status().isOk())
++                .andExpect(MockMvcResultMatchers.content().string("Greetings from Spring Boot!"));
++    }
++}
